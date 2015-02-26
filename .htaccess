@@ -1,0 +1,5 @@
+AuthType Basic
+AuthName "Swag!"
+AuthuserFile /mnt/GreenZone/GreenZone/html/__util/htpasswd/htpasswd
+Require valid-user
+
