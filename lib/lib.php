@@ -5,6 +5,7 @@ else if(empty(trim($_SERVER['PHP_AUTH_USER'])))
 	dieWith("Authentication not enabled. No way to service.");
 
 define("THE_USER", $_SERVER['PHP_AUTH_USER']);
+header("Cache-Control: no-cache, no-store, max-age=0");
 
 $hp = new htpasswd(THE_FILE);
 $gp = new Ashe\Groups(THE_GROUP_FILE);
