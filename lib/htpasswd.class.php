@@ -1,9 +1,14 @@
 <?php
+/* Originally from http://innvo.com/1311865299-htpasswd-manager
+ * 
+ * Slightly changed by Ashe.Goulding@gmail.com
+ */
+
 class htpasswd {
 	var $fp;
 	var $filename;
  
-	function htpasswd($filename) {
+	function htpasswd($filename) {	
 		try
 		{
 			if(! ($this->fp = fopen($filename,'r+')))
@@ -15,6 +20,10 @@ class htpasswd {
 				throw new Exception("Could not create a file: " . $filename);
 		}
 		$this->filename = $filename;
+	}
+	public function __destruct()
+	{
+		fclose($this->fp);
 	}
  
 	function user_exists($username) {
@@ -60,6 +69,21 @@ class htpasswd {
 				}
 			}
 		return false;
+	}
+	
+	function getAllUsers()
+	{
+		$y = array();
+		rewind($this->fp);
+		while(($line = fgets($this->fp)) !== false)
+		{
+			$line = trim($line);
+			if(empty($line))
+				continue;
+			array_push($y, array_values(explode(":", $line))[0]);
+		}
+		
+		return $y;
 	}
 }
 ?>
